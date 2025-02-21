@@ -1,8 +1,8 @@
 export default class AddButton {
-  constructor(parentEl, dataUI, CardForm) {
+  constructor(parentEl, dataUI, cardFormCreate) {
     this.parentEl = parentEl;
     this.dataUI = dataUI;
-    this.CardForm = CardForm;
+    this.cardFormCreate = cardFormCreate;
 
     this.onClick = this.onClick.bind(this);
   }
@@ -13,19 +13,23 @@ export default class AddButton {
          `;
   }
 
+  static get footerSelector() {
+    return '.state-footer';
+  }
+
   static get selector() {
     return '.button.addcard';
   }
 
   bindToDOM() {
-    this.parentEl.innerHTML = AddButton.markup;
-    this.element = this.parentEl.querySelector(AddButton.selector);
+    const footElem = this.parentEl.querySelector(AddButton.footerSelector);
+    footElem.innerHTML = AddButton.markup;
+    this.element = footElem.querySelector(AddButton.selector);
     this.element.addEventListener('click', this.onClick);
   }
 
   onClick(e) {
     e.preventDefault();
-    const cardForm = new this.CardForm(this.parentEl, this.dataUI, AddButton);
-    cardForm.bindToDOM();
+    this.cardFormCreate(this.parentEl, this.dataUI);
   }
 }

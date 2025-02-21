@@ -1,8 +1,8 @@
 export default class CardForm {
-  constructor(parentEl, dataUI, AddButton) {
+  constructor(parentEl, dataUI, addButtonCreate) {
     this.parentEl = parentEl;
     this.dataUI = dataUI;
-    this.AddButton = AddButton;
+    this.addButtonCreate = addButtonCreate;
     this.onSubmit = this.onSubmit.bind(this);
     this.onClose = this.onClose.bind(this);
   }
@@ -35,10 +35,15 @@ export default class CardForm {
     return '.card-form';
   }
 
-  bindToDOM() {
-    this.parentEl.innerHTML = CardForm.markup;
+  static get footerSelector() {
+    return '.state-footer';
+  }
 
-    this.element = this.parentEl.querySelector(CardForm.selector);
+  bindToDOM() {
+    const footElem = this.parentEl.querySelector(CardForm.footerSelector);
+
+    footElem.innerHTML = CardForm.markup;
+    this.element = footElem.querySelector(CardForm.selector);
     this.submit = this.element.querySelector(CardForm.submitSelector);
     this.input = this.element.querySelector(CardForm.inputSelector);
     this.close = this.element.querySelector(CardForm.closeSelector);
@@ -57,9 +62,9 @@ export default class CardForm {
 
   onClose(e) {
     e.preventDefault();
-
-    const addButtonContainer = this.parentEl;
-    const addButton = new this.AddButton(addButtonContainer, this.dataUI);
-    addButton.bindToDOM();
+    this.element.removeEventListener('submit', this.onSubmit);
+    this.close.removeEventListener('click', this.onClose);
+    this.element.remove();
+    this.addButtonCreate(this.parentEl, this.dataUI);
   }
 }

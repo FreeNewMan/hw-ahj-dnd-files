@@ -25,6 +25,18 @@ const getStorageData = (prm) => {
   return sData || [];
 };
 
+let cardFormCreate = {};
+
+const addButtonCreate = (parentEl, dataUI) => {
+  const addbtn = new AddButton(parentEl, dataUI, cardFormCreate);
+  addbtn.bindToDOM();
+};
+
+cardFormCreate = (parentEl, dataUI) => {
+  const card = new CardForm(parentEl, dataUI, addButtonCreate);
+  card.bindToDOM();
+};
+
 document.addEventListener('DOMContentLoaded', () => {
   // Считываение данных из localStorage
   let leftData = [];
@@ -66,28 +78,26 @@ document.addEventListener('DOMContentLoaded', () => {
     ];
   }
 
-  /// /
+  ///
   /// Инициализация колонок и кнопок
 
   const leftStateCol = new StateColumn(leftCol, leftcaption, leftData);
   leftStateCol.bindToDOM();
   // Кнопка Добавить карточку левой панели
-  const addButtonSelectorLeft = leftCol.querySelector('.state-footer');
-  const addButtonLeft = new AddButton(addButtonSelectorLeft, leftStateCol, CardForm);
+  const addButtonLeft = new AddButton(leftCol, leftStateCol, cardFormCreate);
   addButtonLeft.bindToDOM();
 
   const middleStateCol = new StateColumn(middleCol, middlecaption, middleData);
   middleStateCol.bindToDOM();
+
   // Кнопка Добавить карточку средней панели
-  const addButtonSelectormiddle = middleCol.querySelector('.state-footer');
-  const addButtonmiddle = new AddButton(addButtonSelectormiddle, middleStateCol, CardForm);
+  const addButtonmiddle = new AddButton(middleCol, middleStateCol, cardFormCreate);
   addButtonmiddle.bindToDOM();
 
   const rightStateCol = new StateColumn(rightCol, rightcaption, rightData);
   rightStateCol.bindToDOM();
   // Кнопка Добавить карточку правой панели
-  const addButtonSelectorright = rightCol.querySelector('.state-footer');
-  const addButtonright = new AddButton(addButtonSelectorright, rightStateCol, CardForm);
+  const addButtonright = new AddButton(rightCol, rightStateCol, cardFormCreate);
   addButtonright.bindToDOM();
 
   // Перетаскивание
