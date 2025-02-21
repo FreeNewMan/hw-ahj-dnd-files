@@ -1,3 +1,5 @@
+[![Build status](https://ci.appveyor.com/api/projects/status/jc8x3wb0lml03n16?svg=true)](https://ci.appveyor.com/project/FreeNewMan/hw-ahj-dnd-files)
+
 # Домашнее задание к занятию "6. Работа с файлами, DnD"
 
 Правила сдачи задания:
